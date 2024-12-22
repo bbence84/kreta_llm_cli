@@ -176,8 +176,8 @@ while True:
 
         response_function = function_response.choices[0].message
 
-        console.print(f"[bold green]Kréta Bot:[/] ", end="")
+        console.print(f"[bold blue]Kréta Bot:[/] ", end="")
         console.print(response_function.content)
     else:      
-        console.print(f"[bold green]Kréta Bot:[/] ", end="")
+        console.print(f"[bold blue]Kréta Bot:[/] ", end="")
         console.print(response_message.content)        
