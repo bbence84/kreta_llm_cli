@@ -16,9 +16,12 @@ class KretaUtils:
 
     def login(self, user_name: str, password: str, klik_id: str) -> dict:
 
-        # Load the refresh_token from a file (if exists)
-        with open('refresh_token.txt', 'r') as f:
-            refresh_token = f.read()
+        # Load the refresh_token from a file, but handle the case if the file does not exist
+        try:
+            with open('refresh_token.txt', 'r') as f:
+                refresh_token = f.read()
+        except FileNotFoundError:
+            refresh_token = None
         
         # Try to use the refresh_token to get a new access_token
         if refresh_token:
@@ -128,6 +131,7 @@ class KretaUtils:
             api_session = Session()
             response = api_session.get(f'https://{self.klik_id}.e-kreta.hu/ellenorzo/v3/Sajat/OrarendElemek?datumTol={start_date}&datumIg={end_date}', headers=self.request_headers)
             response.raise_for_status()
+            #print(response.json())
             return self.convert_lessons(response.json())
         except RequestException as e:
             raise Exception(f"Failed to get lessons: {e}")
@@ -182,7 +186,7 @@ class KretaUtils:
         try:
             lessons = []
             for item in json_data:
-                if item.get("Tipus", {}).get("Nev") != "TanitasiOra":
+                if item.get("Tipus", {}).get("Nev") != "TanitasiOra" and item.get("Tipus", {}).get("Nev") != "OrarendiOra":
                     continue
                 start_date = datetime.fromisoformat(item['KezdetIdopont'].replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M')
                 end_date = datetime.fromisoformat(item['VegIdopont'].replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M')

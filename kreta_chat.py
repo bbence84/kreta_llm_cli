@@ -11,7 +11,7 @@ from rich.console import Console
 from utils.kreta import KretaUtils
 from utils.date_utils import KretaDateUtils
 
-TRACE_TOOL_CALLS = False
+TRACE_TOOL_CALLS = True
 
 load_dotenv()
 console = Console()
