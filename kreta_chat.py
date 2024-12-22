@@ -19,8 +19,8 @@ console = Console()
 kreta_user_id = os.getenv("KRETA_USER_ID")
 kreta_password = os.getenv("KRETA_USER_PASSWORD")
 kreta_klik_id = os.getenv("KRETA_KLIK_ID")
-kreta_utils = KretaUtils(kreta_user_id, kreta_password, kreta_klik_id)
 
+kreta_utils = KretaUtils(kreta_user_id, kreta_password, kreta_klik_id)
 date_utils = KretaDateUtils()
 
 if os.getenv("SERVICE_TYPE") == "azure":
@@ -37,6 +37,7 @@ messages = [
     {"role": "system", 
         "content": f"""You are a helpful assistant that can helf with answering questions about the students timetable, lessons, homework, etc. The date today is {datetime.date.today()}. 
                     If the information from a function call is already available in the context, use that info instead of doing the same call again.
+                    If you need to call a function, provide the correct arguments, don't make up the parameters.
                     Respond as you would in a verbal conversation. So reply with sentences as in a conversation, no formatting or markdown is needed.
                     Respond in a funny way, but always provide the correct information."""},
 ]
